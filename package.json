@@ -1,0 +1,38 @@
+{
+  "name": "bumi-components-new",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/bumi-components.umd.cjs",
+  "module": "./dist/bumi-components.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/bumi-components.js",
+      "require": "./dist/bumi-components.umd.cjs"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "private": false,
+  "version": "0.0.4",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.37"
+  },
+  "dependencies": {
+    "vite-plugin-dts": "^1.6.6",
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.0",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0",
+    "vue-tsc": "^0.40.4"
+  }
+}
