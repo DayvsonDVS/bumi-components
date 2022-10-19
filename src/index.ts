@@ -1,3 +1,3 @@
-import Button from './components/Button.vue'
+import Contained from './components/Button.vue'
 
-export { Button }
+export { Contained }
