@@ -1,5 +1,5 @@
 <template>
-  <Button state="success">
+  <Button :disabled="true" state="warning">
     <img src="src/assets/icon/svg/plus.svg" />
     Enabled
   </Button>
@@ -14,7 +14,7 @@ import '../assets/scss/main.scss'
 <style lang="scss">
 html {
   background: #17191d;
-  .contained {
+  .button {
     display: grid;
     grid-template-columns: max-content max-content;
     gap: 0.5rem;
