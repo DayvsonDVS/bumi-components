@@ -14,14 +14,14 @@ interface Props {
 const {
   type = 'button',
   disabled = false,
-  state = 'success'
+  state = 'primary'
 } = defineProps<Props>()
 </script>
 
 <style scoped lang="scss">
 .button {
-  width: 110px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
   color: #fff;
   border-radius: 12px;
   font-weight: var(--font-regular);
@@ -38,6 +38,7 @@ const {
     }
     &:active {
       background: var(--primary-darker);
+      border: var(--border-size-none);
     }
     &:disabled {
       opacity: 0.5;
@@ -49,23 +50,25 @@ const {
     }
   }
   &.outlined {
-    background: none;
+    background: var(--outlined);
     border: solid var(--border-size-md) var(--primary);
     &:hover {
-      background: #1d2f44;
+      background: var(--outlined-light);
     }
     &:focus {
-      border: solid var(--border-size-md) var(--primary-darkest);
+      border: solid var(--border-size-md) var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-darkest);
     }
     &:active {
-      background: none;
       border: solid var(--border-size-md) var(--primary-darker);
+      box-shadow: var(--shadow-none);
     }
     &:disabled {
-      opacity: 0.3;
       cursor: not-allowed;
+      border: solid var(--border-size-md) #fff;
+      opacity: 0.2;
       &:hover {
-        background: none;
+        background: var(--outlined);
       }
     }
   }
@@ -80,6 +83,7 @@ const {
     }
     &:active {
       background: var(--success-darker);
+      border: var(--border-size-none);
     }
     &:disabled {
       opacity: 0.5;
@@ -101,6 +105,7 @@ const {
     }
     &:active {
       background: var(--danger-darker);
+      border: var(--border-size-none);
     }
     &:disabled {
       opacity: 0.5;
@@ -122,6 +127,7 @@ const {
     }
     &:active {
       background: var(--warning-darker);
+      border: var(--border-size-none);
     }
     &:disabled {
       opacity: 0.5;
