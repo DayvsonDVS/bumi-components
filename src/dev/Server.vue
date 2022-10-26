@@ -1,5 +1,5 @@
 <template>
-  <Button color="danger"> Enabled </Button>
+  <Button color="primary"> Enabled </Button>
 </template>
 
 <script setup lang="ts">
