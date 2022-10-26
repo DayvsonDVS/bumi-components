@@ -1,21 +1,30 @@
 <template>
-  <button :disabled="disabled" :class="['button', { [state]: state }]">
+  <button
+    :type="type"
+    :outlined="outlined"
+    :disabled="disabled"
+    :class="['button', { [color]: color, outlined: outlined }]"
+  >
     <slot />
   </button>
 </template>
 
 <script setup lang="ts">
+import '@/assets/scss/vars.scss'
+import { withDefaults } from 'vue'
 interface Props {
   type?: 'button' | 'submit'
   disabled?: boolean
-  state: 'primary' | 'success' | 'danger' | 'warning' | 'outlined'
+  color: 'primary' | 'success' | 'danger' | 'warning'
+  outlined?: boolean
 }
 
-const {
-  type = 'button',
-  disabled = false,
-  state = 'primary'
-} = defineProps<Props>()
+withDefaults(defineProps<Props>(), {
+  type: 'button',
+  disabled: false,
+  color: 'primary',
+  outlined: false
+})
 </script>
 
 <style scoped lang="scss">
@@ -31,10 +40,9 @@ const {
     background: var(--primary);
     &:hover {
       background: var(--primary-light);
-      box-shadow: var(--primary-shadow-box);
     }
     &:focus {
-      border: solid var(--border-size-md) var(--primary-darkest);
+      box-shadow: 0 0 0 2px var(--primary-darkest);
     }
     &:active {
       background: var(--primary-darker);
@@ -48,27 +56,26 @@ const {
         box-shadow: var(--shadow-none);
       }
     }
-  }
-  &.outlined {
-    background: var(--outlined);
-    border: solid var(--border-size-md) var(--primary);
-    &:hover {
-      background: var(--outlined-light);
-    }
-    &:focus {
+    &.outlined {
+      background: var(--outlined);
       border: solid var(--border-size-md) var(--primary);
-      box-shadow: 0 0 0 2px var(--primary-darkest);
-    }
-    &:active {
-      border: solid var(--border-size-md) var(--primary-darker);
-      box-shadow: var(--shadow-none);
-    }
-    &:disabled {
-      cursor: not-allowed;
-      border: solid var(--border-size-md) #fff;
-      opacity: 0.2;
       &:hover {
-        background: var(--outlined);
+        background: var(--outlined-light);
+      }
+      &:focus {
+        border: solid var(--border-size-md) var(--primary);
+        box-shadow: 0 0 0 2px var(--primary-darkest);
+      }
+      &:active {
+        border: solid var(--border-size-md) var(--primary-darker);
+        box-shadow: var(--shadow-none);
+      }
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.2;
+        &:hover {
+          background: var(--outlined);
+        }
       }
     }
   }
@@ -76,10 +83,9 @@ const {
     background: var(--success);
     &:hover {
       background: var(--success-light);
-      box-shadow: var(--success-shadow-box);
     }
     &:focus {
-      border: solid var(--border-size-md) var(--success-dark);
+      box-shadow: 0 0 0 2px var(--success-dark);
     }
     &:active {
       background: var(--success-darker);
@@ -93,15 +99,36 @@ const {
         box-shadow: var(--shadow-none);
       }
     }
+    &.outlined {
+      background: var(--outlined);
+      border: solid var(--border-size-md) var(--success);
+      &:hover {
+        background: var(--outlined-light);
+      }
+      &:focus {
+        border: solid var(--border-size-md) var(--success);
+        box-shadow: 0 0 0 2px var(--primary-darkest);
+      }
+      &:active {
+        border: solid var(--border-size-md) var(--success);
+        box-shadow: var(--shadow-none);
+      }
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.2;
+        &:hover {
+          background: var(--outlined);
+        }
+      }
+    }
   }
   &.danger {
     background: var(--danger);
     &:hover {
       background: var(--danger-light);
-      box-shadow: var(--danger-shadow-box);
     }
     &:focus {
-      border: solid var(--border-size-md) var(--danger-dark);
+      box-shadow: 0 0 0 2px var(--danger-dark);
     }
     &:active {
       background: var(--danger-darker);
@@ -115,15 +142,36 @@ const {
         box-shadow: var(--shadow-none);
       }
     }
+    &.outlined {
+      background: var(--outlined);
+      border: solid var(--border-size-md) var(--danger);
+      &:hover {
+        background: var(--outlined-light);
+      }
+      &:focus {
+        border: solid var(--border-size-md) var(--danger);
+        box-shadow: 0 0 0 2px var(--primary-darkest);
+      }
+      &:active {
+        border: solid var(--border-size-md) var(--danger);
+        box-shadow: var(--shadow-none);
+      }
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.2;
+        &:hover {
+          background: var(--outlined);
+        }
+      }
+    }
   }
   &.warning {
     background: var(--warning);
     &:hover {
       background: var(--warning-light);
-      box-shadow: var(--warning-shadow-box);
     }
     &:focus {
-      border: solid var(--border-size-md) var(--warning-dark);
+      box-shadow: 0 0 0 2px var(--warning-dark);
     }
     &:active {
       background: var(--warning-darker);
@@ -135,6 +183,28 @@ const {
       &:hover {
         background: var(--warning);
         box-shadow: var(--shadow-none);
+      }
+    }
+    &.outlined {
+      background: var(--outlined);
+      border: solid var(--border-size-md) var(--warning);
+      &:hover {
+        background: var(--outlined-light);
+      }
+      &:focus {
+        border: solid var(--border-size-md) var(--warning);
+        box-shadow: 0 0 0 2px var(--primary-darkest);
+      }
+      &:active {
+        border: solid var(--border-size-md) var(--warning);
+        box-shadow: var(--shadow-none);
+      }
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.2;
+        &:hover {
+          background: var(--outlined);
+        }
       }
     }
   }
