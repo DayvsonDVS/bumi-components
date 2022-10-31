@@ -1,5 +1,4 @@
 <template>
-  <!-- <Button color="primary"> Enabled </Button> -->
   <Tabs>
     <Tab title="Item One">
       <h1>Article</h1>
@@ -22,14 +21,4 @@
 import { Tabs, Tab } from '@/index'
 </script>
 
-<style scoped lang="scss">
-// .button {
-//   width: 120px;
-//   height: 40px;
-//   display: grid;
-//   grid-template-columns: max-content;
-//   gap: 0.5rem;
-//   justify-content: center;
-//   align-content: center;
-// }
-</style>
+<style scoped lang="scss"></style>

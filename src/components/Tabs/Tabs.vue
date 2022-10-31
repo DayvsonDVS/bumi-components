@@ -3,6 +3,9 @@
     <slot />
   </div>
 </template>
+<script setup lang="ts">
+import '@/assets/scss/vars.scss'
+</script>
 
 <style scoped lang="scss">
 .tabs {
