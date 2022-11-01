@@ -26,7 +26,7 @@ import { ref, onMounted } from 'vue'
 const tabContainer = ref()
 const tabHeaders = ref()
 const tabs = ref()
-const activeTabIndex = ref<number>()
+const activeTabIndex = ref<number>(0)
 
 onMounted(() => {
   tabs.value = [...tabContainer.value.querySelectorAll('.tab')]
@@ -34,6 +34,7 @@ onMounted(() => {
     if (x.classList.contains('active')) {
       activeTabIndex.value = tabs.value.indexOf(x)
     }
+    tabs.value[activeTabIndex.value].classList.add('active')
   }
 })
 
