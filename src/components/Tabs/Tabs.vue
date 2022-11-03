@@ -5,8 +5,8 @@
         <li
           v-for="(tab, index) in tabs"
           :key="index"
-          :class="activeTabIndex === index ? 'active' : ''"
           @click="changeTab(index)"
+          :class="activeTabIndex === index ? 'active' : ''"
           ref="tabHeaders"
         >
           {{ tab.title }}
@@ -23,29 +23,34 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-const tabContainer = ref()
+const tabContainer = ref<HTMLElement>()
 const tabHeaders = ref()
 const tabs = ref()
-const activeTabIndex = ref<number>(0)
+const activeTabIndex = ref<number>()
 
 onMounted(() => {
-  tabs.value = [...tabContainer.value.querySelectorAll('.tab')]
+  tabs.value = [...tabContainer.value!.querySelectorAll('.tab')]
+  let countClass = 0
+
   for (let x of tabs.value) {
     if (x.classList.contains('active')) {
       activeTabIndex.value = tabs.value.indexOf(x)
+      countClass++
     }
-    tabs.value[activeTabIndex.value].classList.add('active')
+    if (countClass > 1) {
+      x.classList.remove('active')
+      console.log(`You declared active ${countClass} times in tab component`)
+    }
   }
 })
 
 const changeTab = (index: number) => {
-  activeTabIndex.value = index
-
   for (let x of [...tabs.value, ...tabHeaders.value]) {
     x.classList.remove('active')
   }
-  tabs.value[activeTabIndex.value].classList.add('active')
-  tabHeaders.value[activeTabIndex.value].classList.add('active')
+
+  tabHeaders.value[index].classList.add('active')
+  tabs.value[index].classList.add('active')
 }
 </script>
 

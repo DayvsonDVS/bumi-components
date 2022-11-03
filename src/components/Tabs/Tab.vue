@@ -1,11 +1,17 @@
 <template>
-  <div :class="['tab', { active: active }]" ref="tabs">
+  <div :class="['tab', { active: active }]">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps(['active'])
+import { withDefaults } from 'vue'
+
+interface props {
+  active?: boolean
+}
+
+withDefaults(defineProps<props>(), {})
 </script>
 
 <style scoped lang="scss">

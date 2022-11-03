@@ -13,14 +13,14 @@
 import { withDefaults } from 'vue'
 import '@/assets/scss/vars.scss'
 
-interface Props {
+interface props {
   type?: 'button' | 'submit'
   disabled?: boolean
   color: 'primary' | 'success' | 'danger' | 'warning'
   outlined?: boolean
 }
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<props>(), {
   type: 'button',
   disabled: false,
   color: 'primary',

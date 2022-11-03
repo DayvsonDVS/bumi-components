@@ -2,9 +2,9 @@
   <Tabs>
     <Tab title="Item One">
       <h1>Article</h1>
-      Study item 1</Tab
-    >
-    <Tab title="Selected">
+      Study item 1
+    </Tab>
+    <Tab active title="Selected">
       But I must explain to you how all this mistaken idea of denouncing
       pleasure and praising pain was born and I will give you a complete account
       of the system, and expound the actual teachings of the great explorer of
