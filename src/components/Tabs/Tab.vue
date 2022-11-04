@@ -17,7 +17,7 @@ withDefaults(defineProps<props>(), {})
 <style scoped lang="scss">
 .tab {
   display: none;
-  padding: 0.75rem;
+  padding: 1rem;
   color: #babdc5;
   background: #232832;
   border-bottom-left-radius: 12px;

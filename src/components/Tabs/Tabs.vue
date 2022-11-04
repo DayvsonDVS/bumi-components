@@ -64,7 +64,6 @@ const changeTab = (index: number) => {
     display: flex;
     background: var(--outlined);
     color: #babdc5;
-    width: 100%;
     li {
       list-style: none;
       padding: 1rem 1.25rem;
