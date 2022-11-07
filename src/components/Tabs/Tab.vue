@@ -7,11 +7,11 @@
 <script setup lang="ts">
 import { withDefaults } from 'vue'
 
-interface props {
+interface Props {
   active?: boolean
 }
 
-withDefaults(defineProps<props>(), {})
+withDefaults(defineProps<Props>(), {})
 </script>
 
 <style scoped lang="scss">
