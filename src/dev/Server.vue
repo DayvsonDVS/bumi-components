@@ -1,6 +1,6 @@
 <template>
-  <Alert color="primary">
-    <h3>An example text alert lorem ipsum.</h3>
+  <Card :notification="1130">
+    <h3>Hello world</h3>
     <p>
       But I must explain to you how all this mistaken idea of denouncing
       pleasure and praising pain was born and I will give you a complete account
@@ -10,11 +10,11 @@
       those who do not know how to pursue pleasure rationally encounter
       consequences.
     </p>
-  </Alert>
+  </Card>
 </template>
 
 <script setup lang="ts">
-import { Alert } from '@/index'
+import { Card } from '@/index'
 </script>
 
 <style scoped lang="scss"></style>
