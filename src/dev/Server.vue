@@ -1,20 +1,16 @@
 <template>
-  <Card :notification="1130">
-    <h3>Hello world</h3>
-    <p>
-      But I must explain to you how all this mistaken idea of denouncing
-      pleasure and praising pain was born and I will give you a complete account
-      of the system, and expound the actual teachings of the great explorer of
-      the truth, the master-builder of human happiness. No one rejects,
-      dislikes, or avoids pleasure itself, because it is pleasure, but because
-      those who do not know how to pursue pleasure rationally encounter
-      consequences.
-    </p>
-  </Card>
+  <Skeleton>
+    <div class="content"></div>
+  </Skeleton>
 </template>
 
 <script setup lang="ts">
-import { Card } from '@/index'
+import { Skeleton } from '@/index'
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.content {
+  width: 100px;
+  height: 200px;
+}
+</style>

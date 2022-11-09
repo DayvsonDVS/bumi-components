@@ -2,6 +2,6 @@ import Button from '@/components/Button.vue'
 import Tabs from '@/components/Tabs/Tabs.vue'
 import Tab from '@/components/Tabs/Tab.vue'
 import Alert from '@/components/Alert.vue'
-import Card from '@/components/Card.vue'
+import Skeleton from '@/components/Skeleton.vue'
 
-export { Button, Tabs, Tab, Alert, Card }
+export { Button, Tabs, Tab, Alert, Skeleton }
