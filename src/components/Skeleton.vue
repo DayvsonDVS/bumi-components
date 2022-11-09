@@ -1,18 +1,33 @@
 <template>
-  <div class="skeleton">
-    <slot />
-  </div>
+  <div class="skeleton"></div>
 </template>
+
+<script setup lang="ts">
+interface Props {
+  width?: string
+  height?: string
+  rounding?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  width: '100px',
+  height: '100px',
+  rounding: '4px'
+})
+</script>
 
 <style scoped lang="scss">
 .skeleton {
-  background-color: #e2e5e7;
+  width: v-bind('props.width');
+  height: v-bind('props.height');
+  border-radius: v-bind(rounding);
+  background-color: #3c4457;
   // The shine that's going to move across the skeleton:
   background-image: linear-gradient(
     90deg,
-    rgba(#fff, 0),
-    rgba(#fff, 0.5),
-    rgba(#fff, 0)
+    rgba(#45536a, 0),
+    rgba(#45536a, 0.5),
+    rgba(#45536a, 0)
   );
   background-size: 100px 100%; // width of the shine
   background-repeat: no-repeat; // No need to repeat the shine effect
