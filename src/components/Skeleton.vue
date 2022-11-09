@@ -9,7 +9,7 @@ interface Props {
   rounding?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   width: '100px',
   height: '100px',
   rounding: '4px'
@@ -18,8 +18,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 <style scoped lang="scss">
 .skeleton {
-  width: v-bind('props.width');
-  height: v-bind('props.height');
+  width: v-bind(width);
+  height: v-bind(height);
   border-radius: v-bind(rounding);
   background-color: #3c4457;
   // The shine that's going to move across the skeleton:
