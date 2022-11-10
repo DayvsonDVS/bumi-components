@@ -1,22 +1,19 @@
 <template>
-  <div class="profile">
-    <Skeleton width="100px" height="100px" rounding="100%" />
-
-    <Skeleton width="80px" height="15px" rounding="100px" />
-
-    <Skeleton width="50px" height="15px" rounding="25px" />
-
-    <Skeleton />
+  <div class="content">
+    <Tag color="default" title="Tag 1" outlined />
+    <Tag color="primary" title="Tag 1" outlined />
+    <Tag color="success" title="Tag 1" outlined />
+    <Tag color="warning" title="Tag 1" outlined />
+    <Tag color="danger" title="Tag 1" outlined />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Skeleton } from '@/index'
+import { Tag } from '@/index'
 </script>
 
 <style scoped lang="scss">
-.profile {
-  display: grid;
-  gap: 0.5rem;
+.content {
+  width: 80px;
 }
 </style>
