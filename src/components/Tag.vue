@@ -41,6 +41,7 @@ $colors: default, primary, success, danger, warning;
       border: solid var(--border-size-md) var(--#{$color}-darker);
       &.outlined {
         background: var(--outlined);
+        color: var(--#{$color}-lightest);
         border: solid var(--border-size-md) var(--#{$color});
       }
     }
