@@ -1,6 +1,5 @@
 <template>
   <div class="content">
-    <Tag color="default" title="Tag 1" outlined />
     <Tag color="primary" title="Tag 1" outlined />
     <Tag color="success" title="Tag 1" outlined />
     <Tag color="warning" title="Tag 1" outlined />

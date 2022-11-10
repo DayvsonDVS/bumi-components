@@ -33,6 +33,7 @@ $colors: primary, success, danger, warning;
 .button {
   width: 100%;
   height: 100%;
+  padding: 8px;
   color: #fff;
   border-radius: 12px;
   font-weight: var(--font-regular);
