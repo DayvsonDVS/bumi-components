@@ -42,26 +42,19 @@ $colors: default, primary, success, danger, warning;
     display: grid;
     grid-template-columns: max-content 1fr max-content;
     gap: 1.2rem;
-    align-items: normal;
     padding: 1.2rem;
     border-radius: 16px;
     &.#{$color} {
       background: var(--#{$color}-darkest);
       color: var(--#{$color});
-      img {
-        fill: var(--#{$color});
-      }
+      display: grid;
+      align-items: baseline;
       &.is-close {
         display: none;
       }
       .close {
-        position: absolute;
-        right: 26px;
-        top: 22px;
         opacity: 0.3;
-        display: grid;
-        align-items: center;
-        padding: 10px;
+        padding: 4px 12px 14px 10px;
         &:hover {
           opacity: 1;
         }
@@ -69,7 +62,6 @@ $colors: default, primary, success, danger, warning;
         &::after {
           position: absolute;
           content: ' ';
-          left: 9px;
           height: 12px;
           width: 2px;
           background-color: var(--#{$color}-lightest);
