@@ -7,7 +7,8 @@
         </th>
       </tr>
     </thead>
-    <tbody :class="['tbody', { striped: striped }]" ref="row">
+
+    <tbody :class="['tbody', { striped: striped }]" ref="tbody">
       <slot />
     </tbody>
   </table>
@@ -16,18 +17,36 @@
 <script setup lang="ts">
 import Sortable from 'sortablejs'
 import { ref, onMounted } from 'vue'
+import { TableRowPositions } from '@/types'
 
 interface Props {
   columns: Array<string>
   striped?: boolean
+  drag?: boolean | ((positions: TableRowPositions) => void)
 }
 
-withDefaults(defineProps<Props>(), {})
-
-const row = ref<HTMLElement>()
+const props = defineProps<Props>()
+const tbody = ref<HTMLElement>()
 
 onMounted(() => {
-  Sortable.create(row.value!, {})
+  if (!props.drag) return
+
+  Sortable.create(tbody.value!, {
+    onEnd() {
+      if (typeof props.drag === 'function') {
+        let positions: TableRowPositions = []
+
+        tbody.value!.querySelectorAll('tr').forEach((row, index) => {
+          positions.push({
+            uid: row.getAttribute('uid') || 'unknown',
+            position: index + 1
+          })
+        })
+
+        props.drag(positions)
+      }
+    }
+  })
 })
 </script>
 

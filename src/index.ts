@@ -7,5 +7,8 @@ import Tag from '@/components/Tag.vue'
 import Table from '@/components/Table/Table.vue'
 import Column from '@/components/Table/Column.vue'
 import Row from '@/components/Table/Row.vue'
+import { TableRowPositions } from '@/types'
 
 export { Button, Tabs, Tab, Alert, Skeleton, Tag, Table, Column, Row }
+
+export type { TableRowPositions }
