@@ -1,19 +1,27 @@
 <template>
   <div class="content">
-    <Alert color="success">
-      <h3>title</h3>
-
-      <p>aaaaaaaa</p>
-    </Alert>
+    <button @click="notification">ok</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Alert } from '../index'
+import { useNotifications } from '@/composables/onNotifications'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  notification()
+})
+function notification() {
+  useNotifications({
+    title: 'Title',
+    text: 'Sample text',
+    color: 'success',
+    position: 'bottom-right',
+    speed: '0.3s',
+    // duration: 3000,
+    ignoreDuplicates: false
+  })
+}
 </script>
 
-<style scoped lang="scss">
-.content {
-  width: 459px;
-}
-</style>
+<style scoped lang="scss"></style>
