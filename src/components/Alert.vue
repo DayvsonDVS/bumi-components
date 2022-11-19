@@ -76,6 +76,7 @@ function close() {
 $colors: default, primary, success, danger, warning;
 .alert {
   margin-bottom: 3px;
+  font-size: var(--font-size-base);
   @each $color in $colors {
     width: max-content;
     display: grid;

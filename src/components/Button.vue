@@ -1,9 +1,9 @@
 <template>
   <button
     :type="type"
-    :outlined="outlined"
+    :outline="outline"
     :disabled="disabled"
-    :class="['button', { [color]: color, outlined: outlined }]"
+    :class="['button', color, { outline }]"
   >
     <slot />
   </button>
@@ -17,30 +17,31 @@ interface Props {
   type?: 'button' | 'submit'
   disabled?: boolean
   color: 'primary' | 'success' | 'danger' | 'warning'
-  outlined?: boolean
+  outline?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
   type: 'button',
   disabled: false,
   color: 'primary',
-  outlined: false
+  outline: false
 })
 </script>
 
 <style scoped lang="scss">
 $colors: primary, success, danger, warning;
 .button {
-  width: 100%;
+  width: max-content;
   height: 100%;
-  padding: 8px;
+  padding: 14px 22px;
   color: #fff;
   border-radius: 12px;
   font-weight: var(--font-regular);
-  border: var(--border-size-none);
+  font-size: var(--font-size-base);
   cursor: pointer;
   @each $color in $colors {
     &.#{$color} {
+      border: solid var(--border-size-md) var(--#{$color});
       background: var(--#{$color});
       transition: all 0.3s ease-in-out;
       &:hover {
@@ -61,12 +62,12 @@ $colors: primary, success, danger, warning;
           box-shadow: var(--shadow-none);
         }
       }
-      &.outlined {
-        background: var(--outlined);
+      &.outline {
+        background: none;
         border: solid var(--border-size-md) var(--#{$color});
         transition: all 0.3s ease-in-out;
         &:hover {
-          background: var(--outlined-light);
+          background: var(--outline-light);
         }
         &:focus {
           border: solid var(--border-size-md) var(--#{$color});
@@ -80,7 +81,7 @@ $colors: primary, success, danger, warning;
           cursor: not-allowed;
           opacity: 0.2;
           &:hover {
-            background: var(--outlined);
+            background: var(--outline);
           }
         }
       }

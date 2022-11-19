@@ -18,6 +18,7 @@ withDefaults(defineProps<Props>(), {
 
 <style scoped lang="scss">
 .skeleton {
+  font-size: var(--font-size-base);
   width: v-bind(width);
   height: v-bind(height);
   border-radius: v-bind(rounding);

@@ -26,7 +26,8 @@ withDefaults(defineProps<Props>(), {
 <style scoped lang="scss">
 $colors: default, primary, success, danger, warning;
 .tag {
-  width: auto;
+  font-size: var(--font-size-base);
+  width: max-content;
   color: #fff;
   border-radius: 14px;
   font-weight: var(--font-regular);
