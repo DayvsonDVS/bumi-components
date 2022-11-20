@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <Button color="success" outline @click="notification">Enabled</Button>
-    <Button color="success" @click="notification">Enabled </Button>
+    <Button color="primary" @click="notification">Enabled </Button>
   </div>
 
   <br />
@@ -10,7 +10,7 @@
 
   <br />
 
-  <Tag title="Tag" color="success"></Tag>
+  <Tag title="Tag 1" color="primary"></Tag>
 
   <br />
 

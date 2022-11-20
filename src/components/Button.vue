@@ -42,7 +42,7 @@ $colors: primary, success, danger, warning;
   cursor: pointer;
   @each $color in $colors {
     &.#{$color} {
-      border: solid var(--border-size-md) var(--#{$color});
+      border: solid var(--border-size-sm) var(--#{$color});
       background: var(--#{$color});
       transition: all 0.3s ease-in-out;
       &:hover {
@@ -65,17 +65,17 @@ $colors: primary, success, danger, warning;
       }
       &.outline {
         background: none;
-        border: solid var(--border-size-md) var(--#{$color});
+        border: solid var(--border-size-sm) var(--#{$color});
         transition: all 0.3s ease-in-out;
         &:hover {
           background: var(--outline-light);
         }
         &:focus {
-          border: solid var(--border-size-md) var(--#{$color});
+          border: solid var(--border-size-sm) var(--#{$color});
           box-shadow: 0 0 0 2px var(--#{$color}-darkest);
         }
         &:active {
-          border: solid var(--border-size-md) var(--#{$color}-darker);
+          border: solid var(--border-size-sm) var(--#{$color}-darker);
           box-shadow: var(--shadow-none);
         }
         &:disabled {

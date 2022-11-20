@@ -1,8 +1,5 @@
 <template>
-  <div
-    :outlined="outlined"
-    :class="['tag', { [color]: color, outlined: outlined }]"
-  >
+  <div :class="['tag', color, { outline: outline }]">
     {{ title }}
   </div>
 </template>
@@ -14,12 +11,12 @@ import '@/assets/scss/vars.scss'
 interface Props {
   title: string
   color: 'default' | 'primary' | 'success' | 'danger' | 'warning'
-  outlined?: boolean
+  outline?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
   color: 'default',
-  outlined: false
+  outline: false
 })
 </script>
 
@@ -33,18 +30,17 @@ $colors: default, primary, success, danger, warning;
   border-radius: 14px;
   font-weight: var(--font-regular);
   border: var(--border-size-none);
-  padding: 8px;
+  padding: 8px 18px;
   display: grid;
   justify-items: center;
   @each $color in $colors {
     &.#{$color} {
-      background: var(--#{$color}-darker);
-      color: var(--#{$color}-lightest);
-      border: solid var(--border-size-md) var(--#{$color}-darker);
-      &.outlined {
-        background: var(--outlined);
-        color: var(--#{$color}-lightest);
-        border: solid var(--border-size-md) var(--#{$color});
+      background: var(--#{$color});
+      color: #fff;
+      border: solid var(--border-size-sm) var(--#{$color});
+      &.outline {
+        background: var(--outline);
+        border: solid var(--border-size-sm) var(--#{$color});
       }
     }
   }
