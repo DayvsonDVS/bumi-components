@@ -55,15 +55,18 @@ onMounted(() => {
   width: 100%;
   background: #2b2f39;
   color: #fff;
-  padding: 1.5rem;
+  padding: 2.5rem;
   border-radius: 12px;
   border-spacing: 0;
+
   thead {
     text-align: left;
+
     tr {
       th {
+        font-weight: var(--font-regular);
         background: #1c2029;
-        padding: 1rem;
+        padding: 1rem 1.7rem;
         &:first-child {
           border-bottom-left-radius: 12px;
           border-top-left-radius: 12px;
@@ -84,7 +87,8 @@ onMounted(() => {
     }
     :deep(tr) {
       th {
-        padding: 1rem;
+        font-weight: var(--font-regular);
+        padding: 1rem 1.7rem;
         &:first-child {
           border-bottom-left-radius: 12px;
           border-top-left-radius: 12px;
