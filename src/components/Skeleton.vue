@@ -35,7 +35,6 @@ withDefaults(defineProps<Props>(), {
   background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
   animation: shine 1.3s ease infinite; // increase animation time to see effect in 'slow-mo'
 }
-
 @keyframes shine {
   to {
     // Move shine from left to right, with offset on the right based on the width of the shine - see background-size

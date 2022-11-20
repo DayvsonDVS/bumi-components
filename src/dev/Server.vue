@@ -61,13 +61,14 @@ onMounted(() => {
 })
 function notification() {
   useNotifications({
-    title: 'Title',
-    text: 'Sample text',
-    color: 'success',
-    position: 'top-right',
-    speed: '0.3s',
+    title: 'An example text alert lorem ipsum. ',
+    text: `But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences.`,
+    color: 'danger',
+    position: 'bottom-right',
+    speed: '1.3s',
     // duration: 3000,
-    ignoreDuplicates: false
+    ignoreDuplicates: false,
+    closeOnClick: true
   })
 }
 function updatePositions(positions: TableRowPositions) {

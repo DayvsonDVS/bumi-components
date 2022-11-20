@@ -1,22 +1,19 @@
 <template>
-  <div
-    :class="['alert', { [color]: color, 'is-close': active }]"
-    ref="elementAlert"
-  >
+  <div :class="['alert', color, { 'is-close': active }]" ref="elementAlert">
     <img :src="iconAlertUrl" />
 
-    <div class="slot">
-      <h3>{{ title }}</h3>
-
-      <p>{{ text }}</p>
+    <div class="content">
+      <h4>{{ props.title }}</h4>
+      <p v-if="props.text">{{ props.text }}</p>
     </div>
 
-    <a href="#" class="close" ref="elementClose" />
+    <a v-if="!props.closeOnClick" class="close" @click="close" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { withDefaults, ref, computed, onMounted } from 'vue'
+import { onClick } from '@/composables/onClick'
 import '@/assets/scss/vars.scss'
 import '@/assets/scss/main.scss'
 
@@ -37,8 +34,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const elementAlert = ref<HTMLElement>()
-const elementClose = ref<HTMLElement>()
 const active = ref(false)
+const transitionTime = ref<number>()
 
 const iconAlertUrl = computed(() => {
   return new URL(`../assets/icon/alert/${props.color}.svg`, import.meta.url)
@@ -46,52 +43,80 @@ const iconAlertUrl = computed(() => {
 })
 
 onMounted(() => {
+  loadSpeed()
+
   if (props.duration > 0) {
     setTimeout(() => {
       close()
     }, props.duration)
   }
+
   if (props.closeOnClick) {
-    elementAlert.value?.addEventListener('click', () => {
-      close()
-    })
-  }
-  if (!props.closeOnClick) {
-    elementClose.value?.addEventListener('click', () => {
+    onClick(elementAlert.value!, () => {
       close()
     })
   }
 })
+
+// Identified a bug when closing the notification, the speed value was not correct.
+
+// Implemented new solution to solve the problem.
+
+// The + value is a type conversion, something like parseint()
+
+function loadSpeed() {
+  if (props.speed.includes('.')) {
+    transitionTime.value = +props.speed.replace(/\D+/g, '') * 100
+  } else {
+    transitionTime.value = +props.speed.replace(/\D+/g, '') * 1000
+  }
+}
 
 function close() {
   active.value = true
 
   setTimeout(() => {
     elementAlert.value?.remove()
-  }, +props.speed.replace(/\D+/g, '000'))
+  }, transitionTime.value)
 }
 </script>
 
 <style scoped lang="scss">
 $colors: default, primary, success, danger, warning;
+
 .alert {
   margin-bottom: 3px;
-  font-size: var(--font-size-base);
   @each $color in $colors {
+    font-size: var(--font-size-base);
     width: max-content;
     display: grid;
+    align-items: baseline;
     grid-template-columns: max-content 1fr max-content;
     gap: 1.2rem;
-    padding: 1.2rem;
+    padding: 1.2rem 1.2rem 0.8rem;
     border-radius: 16px;
     opacity: 1;
     transition: all v-bind(speed) ease-in-out;
     z-index: 999;
+    inline-size: auto;
+    line-height: 1.5;
+    .content {
+      h4 {
+        position: relative;
+        top: -3px;
+        margin: 0;
+        font-weight: var(--font-regular);
+      }
+      p {
+        margin-bottom: 4px;
+        margin-top: 6px;
+        font-weight: 300;
+        font-size: var(--font-size-sm);
+      }
+    }
     &.#{$color} {
       background: var(--#{$color}-darkest);
       color: var(--#{$color});
-      display: grid;
-      align-items: baseline;
       &.is-close {
         pointer-events: none;
         opacity: 0;
@@ -99,7 +124,6 @@ $colors: default, primary, success, danger, warning;
       .close {
         opacity: 0.3;
         padding: 4px 12px 14px 10px;
-
         &:hover {
           opacity: 1;
         }

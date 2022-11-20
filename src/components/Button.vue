@@ -30,6 +30,7 @@ withDefaults(defineProps<Props>(), {
 
 <style scoped lang="scss">
 $colors: primary, success, danger, warning;
+
 .button {
   width: max-content;
   height: 100%;
