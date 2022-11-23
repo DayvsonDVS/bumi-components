@@ -1,7 +1,7 @@
 <template>
   <div class="content">
-    <Button color="success" outline @click="notification">Enabled</Button>
-    <Button color="primary" @click="notification">Enabled </Button>
+    <Button color="success" outline @click="notification">Notification</Button>
+    <Button color="primary" @click="notification">Notification </Button>
   </div>
 
   <br />
@@ -30,13 +30,22 @@
   <br />
 
   <Tabs>
-    <Tab title="Tab1" active>
-      <h1>Tab1</h1>
-      <p>teste</p>
+    <Tab title="Deselected">
+      <p>Deselected</p>
     </Tab>
-    <Tab title="Tab2">
-      <h1>Tab2</h1>
-      <p>teste</p>
+    <Tab title="Selected">
+      <p>
+        But I must explain to you how all this mistaken idea of denouncing
+        pleasure and praising pain was born and I will give you a complete
+        account of the system, and expound the actual teachings of the great
+        explorer of the truth, the master-builder of human happiness. No one
+        rejects, dislikes, or avoids pleasure itself, because it is pleasure,
+        but because those who do not know how to pursue pleasure rationally
+        encounter consequences.
+      </p>
+    </Tab>
+    <Tab title="Deselected">
+      <p>Deselected</p>
     </Tab>
   </Tabs>
 </template>

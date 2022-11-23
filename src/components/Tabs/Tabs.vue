@@ -1,79 +1,111 @@
 <template>
-  <div class="tabs" ref="tabContainer">
+  <div class="tabs">
     <div class="tabs-headers">
-      <ul>
+      <ul ref="tabHeader">
         <li
-          v-for="(tab, index) in tabs"
+          v-for="(title, index) in titles"
           :key="index"
           @click="changeTab(index)"
           :class="activeTabIndex === index ? 'active' : ''"
-          ref="tabHeaders"
         >
-          {{ tab.title }}
+          {{ title }}
         </li>
       </ul>
     </div>
 
-    <div class="active-tabs">
+    <div ref="tabBody">
       <slot />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 
-const tabContainer = ref<HTMLElement>()
-const tabHeaders = ref()
-const tabs = ref()
+const tabHeader = ref<HTMLElement>()
+const tabBody = ref<HTMLElement>()
 const activeTabIndex = ref<number>()
+const titles = ref<Array<string>>([])
 
 onMounted(() => {
-  tabs.value = [...tabContainer.value!.querySelectorAll('.tab')]
-  let countClass = 0
+  const body = [...tabBody.value?.children!]
 
-  for (let x of tabs.value) {
-    if (x.classList.contains('active')) {
-      activeTabIndex.value = tabs.value.indexOf(x)
-      countClass++
+  loadTitles()
+
+  body.map((element) => {
+    if (
+      !element.classList.contains('active') &&
+      activeTabIndex.value === undefined
+    ) {
+      activeTabIndex.value = 0
+      body[0].classList.add('active')
     }
-    if (countClass > 1) {
-      x.classList.remove('active')
-      console.log(`You declared active ${countClass} times in tab component`)
-    }
-  }
+  })
 })
 
-const changeTab = (index: number) => {
-  for (let x of [...tabs.value, ...tabHeaders.value]) {
-    x.classList.remove('active')
-  }
+function loadTitles() {
+  const body = [...tabBody.value?.children!]
+  let countClass = 0
 
-  tabHeaders.value[index].classList.add('active')
-  tabs.value[index].classList.add('active')
+  body.map((element, index) => {
+    titles.value?.push(element.getAttributeNode('title')?.value!)
+
+    if (element.classList.contains('active')) {
+      activeTabIndex.value = index
+      ++countClass
+    }
+
+    if (countClass > 1) {
+      element.classList.remove('active')
+      console.log(`Tab component has ${countClass} activations`)
+    }
+  })
+}
+
+function changeTab(index: number) {
+  const header = [...tabHeader.value?.children!]
+  const body = [...tabBody.value?.children!]
+
+  classReset()
+
+  header[index].classList.add('active')
+  body[index].classList.add('active')
+}
+
+function classReset() {
+  for (let elements of [
+    ...tabHeader.value?.children!,
+    ...tabBody.value?.children!
+  ]) {
+    elements.classList.remove('active')
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.tabs-headers {
-  ul {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    background: var(--outlined);
-    color: #babdc5;
-    li {
-      list-style: none;
-      padding: 1rem 1.25rem;
-      cursor: pointer;
-      opacity: 0.5;
-      &.active {
-        opacity: 1;
-        background: #232832;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+.tabs {
+  padding: 10px;
+  .tabs-headers {
+    ul {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      margin: auto;
+      padding: 0;
+      display: flex;
+      background: var(--outlined);
+      color: #babdc5;
+      width: max-content;
+      li {
+        list-style: none;
+        padding: 1.2rem 2.2rem;
+        cursor: pointer;
+        opacity: 0.5;
+        &.active {
+          opacity: 1;
+          background: #232832;
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
+        }
       }
     }
   }
