@@ -3,10 +3,10 @@
     <div class="tabs-headers">
       <ul ref="tabHeader">
         <li
-          v-for="(title, index) in titles"
+          v-for="({ title, active, uid }, index) in tabs"
           :key="index"
-          @click="changeTab(index)"
-          :class="activeTabIndex === index ? 'active' : ''"
+          :class="{ active }"
+          @click="changeTab(uid)"
         >
           {{ title }}
         </li>
@@ -20,65 +20,30 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
+import { eventBus } from '@/utils/eventBus'
+import { Tab } from '@/types'
 
-const tabHeader = ref<HTMLElement>()
-const tabBody = ref<HTMLElement>()
-const activeTabIndex = ref<number>()
-const titles = ref<Array<string>>([])
+const tabs = ref<Tab[]>([])
 
-onMounted(() => {
-  const body = [...tabBody.value?.children!]
-
-  loadTitles()
-
-  body.map((element) => {
-    if (
-      !element.classList.contains('active') &&
-      activeTabIndex.value === undefined
-    ) {
-      activeTabIndex.value = 0
-      body[0].classList.add('active')
-    }
-  })
+eventBus.on('addTab', (data) => {
+  tabs.value.push(data)
 })
 
-function loadTitles() {
-  const body = [...tabBody.value?.children!]
-  let countClass = 0
+console.log(tabs.value)
 
-  body.map((element, index) => {
-    titles.value?.push(element.getAttributeNode('title')?.value!)
+function changeTab(uid: number) {
+  tabs.value = tabs.value.map((tab) => {
+    return { ...tab, active: uid === tab.uid }
+  })
 
-    if (element.classList.contains('active')) {
-      activeTabIndex.value = index
-      ++countClass
-    }
-
-    if (countClass > 1) {
-      element.classList.remove('active')
-      console.log(`Tab component has ${countClass} activations`)
+  document.querySelectorAll(`.tab[uid]`).forEach((tabEl) => {
+    if (+tabEl.getAttribute('uid')! === uid) {
+      tabEl.classList.add('active')
+    } else {
+      tabEl.classList.remove('active')
     }
   })
-}
-
-function changeTab(index: number) {
-  const header = [...tabHeader.value?.children!]
-  const body = [...tabBody.value?.children!]
-
-  classReset()
-
-  header[index].classList.add('active')
-  body[index].classList.add('active')
-}
-
-function classReset() {
-  for (let elements of [
-    ...tabHeader.value?.children!,
-    ...tabBody.value?.children!
-  ]) {
-    elements.classList.remove('active')
-  }
 }
 </script>
 

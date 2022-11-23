@@ -1,32 +1,25 @@
 <template>
-  <div :class="['tab', { active }]" :uid="uid">
+  <div :class="['tab', { active }]" ref="tab">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import { eventBus } from '@/utils/eventBus'
-// import { ref } from 'vue'
+import { useEmitter } from '@/emitter'
+import { ref } from 'vue'
+
+const tab = ref<HTMLElement>()
+const emitter = useEmitter()
 
 interface Props {
-  title: string
   active?: boolean
 }
-
-// const isActive = ref(false)
-const uid = Math.floor(100000 + Math.random() * 900000)
 
 const props = withDefaults(defineProps<Props>(), {
   active: false
 })
 
-// isActive.value = props.active
-
-eventBus.emit('addTab', { title: props.title, active: props.active, uid })
-
-// eventBus.on('setActiveTab', (data) => {
-//   isActive.value = data.uid === uid
-// })
+emitter.emitter.on('active', () => props.active)
 </script>
 
 <style scoped lang="scss">

@@ -18,5 +18,13 @@ interface NotificationsProp {
   ignoreDuplicates?: boolean
   closeOnClick?: boolean
 }
+
+export interface Tab {
+  title: string
+  active: boolean
+  uid: number
+}
+
 export type NotificationsProps = NotificationsProp
+
 export type TableRowPositions = TableRowPosition[]
