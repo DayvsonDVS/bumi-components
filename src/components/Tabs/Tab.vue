@@ -21,7 +21,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 // isActive.value = props.active
-
 eventBus.emit('addTab', { title: props.title, active: props.active, uid })
 
 // eventBus.on('setActiveTab', (data) => {

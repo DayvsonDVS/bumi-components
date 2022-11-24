@@ -30,8 +30,6 @@ eventBus.on('addTab', (data) => {
   tabs.value.push(data)
 })
 
-console.log(tabs.value)
-
 function changeTab(uid: number) {
   tabs.value = tabs.value.map((tab) => {
     return { ...tab, active: uid === tab.uid }
