@@ -4,7 +4,7 @@
       <p>Tab 111111</p>
     </Tab>
 
-    <Tab active title="Selected">
+    <Tab title="Selected">
       <p>
         But I must explain to you how all this mistaken idea of denouncing
         pleasure and praising pain was born and I will give you a complete

@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { eventBus } from '@/utils/eventBus'
+import { watch } from 'vue'
 // import { ref } from 'vue'
 
 interface Props {
@@ -22,6 +23,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 // isActive.value = props.active
 eventBus.emit('addTab', { title: props.title, active: props.active, uid })
+
+watch(props, () => {
+  eventBus.emit('changeTab', {
+    title: props.title,
+    active: props.active,
+    uid
+  })
+})
 
 // eventBus.on('setActiveTab', (data) => {
 //   isActive.value = data.uid === uid

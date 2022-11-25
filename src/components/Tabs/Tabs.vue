@@ -5,6 +5,7 @@
         <li
           v-for="({ title, active, uid }, index) in tabs"
           :key="index"
+          :uid="uid"
           :class="{ active }"
           @click="changeTab(uid)"
         >
@@ -20,14 +21,43 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { eventBus } from '@/utils/eventBus'
 import { Tab } from '@/types'
 
 const tabs = ref<Tab[]>([])
+const tabHeader = ref<HTMLElement>()
+const tabBody = ref<HTMLElement>()
 
 eventBus.on('addTab', (data) => {
   tabs.value.push(data)
+})
+
+onMounted(() => {
+  const body = [...tabBody.value?.children!]
+
+  if (!tabs.value.some(({ active }) => active === true)) {
+    tabs.value[0].active = true
+    body[0]?.classList.add('active')
+  }
+
+  eventBus.on('changeTab', (data) => {
+    const listHead = [...tabHeader.value?.children!]
+
+    listHead.map((element) => {
+      if (
+        +element.getAttribute('uid')! === data.uid &&
+        !element.classList.contains('active')
+      ) {
+        element.classList.add('active')
+      } else if (
+        +element.getAttribute('uid')! === data.uid &&
+        element.classList.contains('active')
+      ) {
+        element.classList.remove('active')
+      }
+    })
+  })
 })
 
 function changeTab(uid: number) {
