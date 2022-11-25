@@ -1,40 +1,32 @@
 <template>
-  <div :class="['tab', { active }]" :uid="uid">
+  <div :class="['tab', { active: isActive }]">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
+import { defineProps, inject, Ref, computed } from 'vue'
 import { eventBus } from '@/utils/eventBus'
-import { watch } from 'vue'
-// import { ref } from 'vue'
+import { Tab } from '@/types'
 
 interface Props {
   title: string
   active?: boolean
 }
 
-// const isActive = ref(false)
-const uid = Math.floor(100000 + Math.random() * 900000)
-
-const props = withDefaults(defineProps<Props>(), {
+const { title, active } = withDefaults(defineProps<Props>(), {
   active: false
 })
 
-// isActive.value = props.active
-eventBus.emit('addTab', { title: props.title, active: props.active, uid })
+const tabs = inject('tabs') as Ref<Tab[]>
 
-watch(props, () => {
-  eventBus.emit('changeTab', {
-    title: props.title,
-    active: props.active,
-    uid
-  })
+const uid = Math.floor(100000 + Math.random() * 900000)
+
+const isActive = computed(() => {
+  return tabs.value.some((tab) => tab.active && tab.uid === uid)
 })
 
-// eventBus.on('setActiveTab', (data) => {
-//   isActive.value = data.uid === uid
-// })
+eventBus.emit('addTab', { title, active, uid })
 </script>
 
 <style scoped lang="scss">

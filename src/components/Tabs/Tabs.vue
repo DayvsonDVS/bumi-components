@@ -1,84 +1,91 @@
 <template>
   <div class="tabs">
     <div class="tabs-headers">
-      <ul ref="tabHeader">
+      <ul>
         <li
-          v-for="({ title, active, uid }, index) in tabs"
-          :key="index"
-          :uid="uid"
+          v-for="{ title, active, uid } in tabs"
+          :key="uid"
           :class="{ active }"
           @click="changeTab(uid)"
-        >
-          {{ title }}
-        </li>
+          v-text="title"
+        />
       </ul>
     </div>
 
-    <div ref="tabBody">
+    <div>
       <slot />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref, useSlots, provide } from 'vue'
 import { eventBus } from '@/utils/eventBus'
 import { Tab } from '@/types'
 
 const tabs = ref<Tab[]>([])
-const tabHeader = ref<HTMLElement>()
-const tabBody = ref<HTMLElement>()
+const slots = useSlots()
+const hasOneTabActive = ref(false)
+const hasManyTabActive = ref(false)
+
+if (slots.default) {
+  let count = 0
+  slots.default().map(({ props }) => {
+    if (props?.active === '') {
+      count = ++count
+    }
+  })
+  count > 1 ? (hasManyTabActive.value = true) : false
+
+  hasOneTabActive.value = slots.default().some(({ props }) => {
+    return props?.active !== undefined
+  })
+}
 
 eventBus.on('addTab', (data) => {
-  tabs.value.push(data)
-})
+  if (hasManyTabActive.value) {
+    tabs.value.push({
+      ...data,
 
-onMounted(() => {
-  const body = [...tabBody.value?.children!]
-
-  if (!tabs.value.some(({ active }) => active === true)) {
-    tabs.value[0].active = true
-    body[0]?.classList.add('active')
-  }
-
-  eventBus.on('changeTab', (data) => {
-    const listHead = [...tabHeader.value?.children!]
-
-    listHead.map((element) => {
-      if (
-        +element.getAttribute('uid')! === data.uid &&
-        !element.classList.contains('active')
-      ) {
-        element.classList.add('active')
-      } else if (
-        +element.getAttribute('uid')! === data.uid &&
-        element.classList.contains('active')
-      ) {
-        element.classList.remove('active')
-      }
+      active:
+        hasManyTabActive.value && tabs.value.length > 0
+          ? false
+          : (data.active = true)
     })
-  })
+  } else {
+    tabs.value.push({
+      ...data,
+
+      active: !hasOneTabActive.value && !tabs.value.length ? true : data.active
+    })
+  }
 })
 
 function changeTab(uid: number) {
-  tabs.value = tabs.value.map((tab) => {
-    return { ...tab, active: uid === tab.uid }
-  })
-
-  document.querySelectorAll(`.tab[uid]`).forEach((tabEl) => {
-    if (+tabEl.getAttribute('uid')! === uid) {
-      tabEl.classList.add('active')
-    } else {
-      tabEl.classList.remove('active')
-    }
-  })
+  tabs.value = tabs.value.map((tab) => ({ ...tab, active: uid === tab.uid }))
 }
+
+provide('tabs', tabs)
 </script>
 
 <style scoped lang="scss">
 .tabs {
   padding: 10px;
   .tabs-headers {
+    overflow-x: auto;
+    margin-left: 12px;
+    margin-right: 12px;
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
     ul {
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
