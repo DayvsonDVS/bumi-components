@@ -7,6 +7,9 @@ import Tag from '@/components/Tag.vue'
 import Table from '@/components/Table/Table.vue'
 import Column from '@/components/Table/Column.vue'
 import Row from '@/components/Table/Row.vue'
+import Sidebar from '@/components/Sidebar/Sidebar.vue'
+import NavItem from '@/components/Sidebar/NavItem.vue'
+import NavGroup from '@/components/Sidebar/NavGroup.vue'
 import { TableRowPositions } from '@/types'
 import { useNotifications } from '@/composables/onNotifications'
 
@@ -20,6 +23,9 @@ export {
   Table,
   Column,
   Row,
+  Sidebar,
+  NavItem,
+  NavGroup,
   useNotifications
 }
 

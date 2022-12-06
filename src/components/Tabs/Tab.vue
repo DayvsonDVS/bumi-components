@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, inject, Ref, computed } from 'vue'
+import { inject, Ref, computed } from 'vue'
 import { eventBus } from '@/utils/eventBus'
 import { Tab } from '@/types'
 

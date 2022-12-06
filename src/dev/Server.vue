@@ -1,27 +1,30 @@
 <template>
-  <Tabs>
-    <Tab title="tab 1">
-      <p>Tab 111111</p>
-    </Tab>
+  <div class="content">
+    <Sidebar>
+      <h1>Header</h1>
+      <NavItem to="/profile"> Profile </NavItem>
 
-    <Tab title="Selected">
-      <p>
-        But I must explain to you how all this mistaken idea of denouncing
-        pleasure and praising pain was born and I will give you a complete
-        account of the system, and expound the actual teachings of the great
-        explorer of the truth, the master-builder of human happiness. No one
-        rejects, dislikes, or avoids pleasure itself, because it is pleasure,
-        but because those who do not know how to pursue pleasure rationally
-        encounter consequences.
-      </p>
-    </Tab>
+      <NavGroup
+        :items="[
+          { to: '/general', title: 'General' },
+          { to: '/password', title: 'Password' },
+          { to: '/notifications', disabled: true, title: 'Notifications' }
+        ]"
+      >
+        <img src="@/dev/assets/icons/gear.svg" alt="" />
+        Settings
+      </NavGroup>
 
-    <Tab title="Tabb 33">
-      <p>33333333333</p>
-    </Tab>
-  </Tabs>
+      <h1>Footer</h1>
+    </Sidebar>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { Tabs, Tab } from '@/index'
+import { Sidebar, NavItem, NavGroup } from '@/index'
 </script>
+
+<style scoped lang="scss">
+.content {
+}
+</style>
