@@ -1,15 +1,19 @@
 <template>
-  <div :class="['nav-item', { 'on-route': onRoute }]">
+  <div :class="['nav-item', { 'on-route': route.path === to }]">
     <div ref="border" class="border"></div>
 
-    <a :class="['content', { active: currentPath === to }]" :href="to">
+    <RouterLink
+      :class="['content', { active: route.path === to }]"
+      :to="props.to!"
+    >
       <slot />
-    </a>
+    </RouterLink>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+
 interface Props {
   to?: string
   active?: boolean
@@ -17,14 +21,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const currentPath = ref(window.location.pathname)
-const onRoute = ref<Boolean>(false)
-
-if (props.to === currentPath.value) {
-  onRoute.value = true
-} else {
-  onRoute.value = false
-}
+const route = useRoute()
 </script>
 
 <style scoped lang="scss">
@@ -33,7 +30,7 @@ if (props.to === currentPath.value) {
   overflow: hidden;
   height: max-content;
   border-radius: 15px;
-  transition: all 0.3s ease-out;
+  transition: all 0.4s ease-in;
   &:hover {
     background: #232832;
     border-radius: 15px;
@@ -63,7 +60,6 @@ if (props.to === currentPath.value) {
     .border {
       background: var(--primary);
       height: 26px;
-      box-shadow: 0px 0 4px var(--primary);
       transition: all 0.3s ease-out;
     }
   }

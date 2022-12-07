@@ -1,5 +1,7 @@
 <template>
-  <div :class="['nav-group', { 'on-route': onRoute, active: !activeArrow }]">
+  <div
+    :class="['nav-group', { 'on-route': onRoute }, { active: !activeArrow }]"
+  >
     <div ref="border" class="border"></div>
 
     <a class="title" @click="onCollapsible">
@@ -11,47 +13,50 @@
     <div class="content" ref="collapse">
       <li
         v-for="{ title, to, disabled } in items"
-        :class="{ disabled, active: currentPath === to }"
+        :class="{ disabled, active: route.path === to }"
       >
-        <span @click="router.push(to)">{{ title }}</span>
+        <RouterLink :to="to"> {{ title }} </RouterLink>
       </li>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, ref, computed, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 
-const router = useRouter()
-
-type Navitem = {
+type NavItem = {
   to: string
   title: string
   disabled?: boolean
 }
 
 interface Props {
-  items?: Array<Navitem>
+  items?: Array<NavItem>
 }
 
 const props = defineProps<Props>()
-const onRoute = ref<Boolean>(true)
+
 const activeArrow = ref<Boolean>(true)
 const collapse = ref<HTMLElement>()
 const border = ref<HTMLElement>()
-const currentPath = ref(window.location.pathname)
 const maxHeightCollapse = ref<number>(0)
+const route = useRoute()
 
-if (props.items?.some(({ to }) => to === currentPath.value)) {
-  activeArrow.value = false
+const onRoute = computed(() => {
+  return props.items?.some(({ to }) => to === route.path) as boolean
+})
 
-  onRoute.value = true
-} else {
-  activeArrow.value = true
-
-  onRoute.value = false
-}
+watch(
+  () => onRoute.value,
+  (active) => {
+    if (!active) {
+      activeArrow.value = true
+      border.value?.setAttribute('style', `max-height:26px; opacity:0;`)
+      collapse.value?.removeAttribute('style')
+    }
+  }
+)
 
 onMounted(() => {
   maxHeightCollapse.value = collapse.value?.scrollHeight!
@@ -70,22 +75,22 @@ function onCollapsible() {
     `max-height:${maxHeightCollapse.value + 26}px;`
   )
 
-  if (!onRoute.value && !collapse.value?.getAttribute('style')) {
+  if (!onRoute.value && !activeArrow.value) {
     collapse.value?.setAttribute(
       'style',
       `max-height:${maxHeightCollapse.value + 26}px;`
     )
-  } else if (!onRoute.value && collapse.value?.getAttribute('style')) {
-    collapse.value?.removeAttribute('style')
-  } else if (onRoute.value && activeArrow.value) {
-    border.value?.setAttribute('style', `max-height:26px;`)
-
+  } else if (!onRoute.value && activeArrow.value) {
     collapse.value?.setAttribute('style', `max-height:0px;`)
   } else if (onRoute.value && !activeArrow.value) {
     collapse.value?.setAttribute(
       'style',
       `max-height:${maxHeightCollapse.value + 26}px;`
     )
+  } else if (onRoute.value && activeArrow.value) {
+    border.value?.setAttribute('style', `max-height:26px;`)
+
+    collapse.value?.setAttribute('style', `max-height:0px;`)
   }
 }
 </script>
@@ -97,15 +102,14 @@ function onCollapsible() {
   color: #fff;
   overflow: hidden;
   height: max-content;
-  transition: all 0.3s ease-out;
+  transition: all 0.4s ease-in;
   .border {
     position: absolute;
     top: 11px;
     height: 0;
     width: 4px;
-    box-shadow: 0px 0 4px var(--primary);
     border-radius: 15px;
-    transition: all 0.3s ease-out;
+    transition: all 0.3s ease-in;
   }
   .title {
     padding: 1rem 6rem 1rem 2.2rem;

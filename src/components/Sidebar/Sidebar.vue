@@ -9,7 +9,7 @@
 <style scoped lang="scss">
 .sidebar {
   display: grid;
-  grid-template-rows: auto;
+  grid-auto-rows: auto;
   gap: 1rem;
   padding: 1rem;
   background: #313640;
