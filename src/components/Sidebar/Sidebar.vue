@@ -8,6 +8,9 @@
 
 <style scoped lang="scss">
 .sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: grid;
   grid-auto-rows: auto;
   gap: 1rem;

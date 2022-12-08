@@ -30,7 +30,7 @@ const route = useRoute()
   overflow: hidden;
   height: max-content;
   border-radius: 15px;
-  transition: all 0.4s ease-in;
+  transition: all 0.3s ease-out;
   &:hover {
     background: #232832;
     border-radius: 15px;
@@ -48,8 +48,8 @@ const route = useRoute()
     padding: 1rem 6rem 1rem 2.2rem;
     cursor: pointer;
     color: #fff;
-    font-size: 15px;
-    font-weight: 100;
+    font-size: 16px;
+    font-weight: var(--font-regular);
     text-decoration: none;
     display: grid;
     grid-auto-flow: column;

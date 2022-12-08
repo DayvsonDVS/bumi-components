@@ -7,7 +7,7 @@
     <a class="title" @click="onCollapsible">
       <slot />
 
-      <a :class="['arrow', activeArrow ? 'up' : 'down']" />
+      <a :class="['arrow', activeArrow ? 'down' : 'up']" />
     </a>
 
     <div class="content" ref="collapse">
@@ -60,7 +60,6 @@ watch(
 
 onMounted(() => {
   maxHeightCollapse.value = collapse.value?.scrollHeight!
-
   border.value?.setAttribute(
     'style',
     `max-height:${maxHeightCollapse.value + 26}px;`
@@ -102,21 +101,21 @@ function onCollapsible() {
   color: #fff;
   overflow: hidden;
   height: max-content;
-  transition: all 0.4s ease-in;
+  transition: all 0.3s ease-out;
   .border {
     position: absolute;
     top: 11px;
     height: 0;
     width: 4px;
     border-radius: 15px;
-    transition: all 0.3s ease-in;
+    transition: all 0.3s ease-out;
   }
   .title {
     padding: 1rem 6rem 1rem 2.2rem;
     cursor: pointer;
     color: #fff;
-    font-size: 15px;
-    font-weight: 100;
+    font-size: 16px;
+    font-weight: var(--font-regular);
     text-decoration: none;
     display: grid;
     grid-auto-flow: column;
@@ -132,6 +131,8 @@ function onCollapsible() {
       &.up {
         transform: rotate(-135deg);
         -webkit-transform: rotate(-135deg);
+        position: relative;
+        bottom: -2px;
       }
       &.down {
         transform: rotate(45deg);
@@ -179,8 +180,8 @@ function onCollapsible() {
       a {
         text-decoration: none;
         color: #babdc5;
-        font-size: 15px;
-        font-weight: 100;
+        font-size: 16px;
+        font-weight: var(--font-regular);
         position: relative;
         top: -3px;
         margin-left: -10px;
