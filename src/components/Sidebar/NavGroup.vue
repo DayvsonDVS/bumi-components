@@ -1,16 +1,22 @@
 <template>
-  <div
-    :class="['nav-group', { 'on-route': onRoute }, { active: !activeArrow }]"
-  >
-    <div ref="border" class="border"></div>
+  <div :class="['nav-group', { active: onRoute, expanded: !expanded }]">
+    <div
+      class="border"
+      ref="border"
+      :style="{ '--height-border': maxHeightCollapse }"
+    ></div>
 
     <a class="title" @click="onCollapsible">
       <slot />
 
-      <a :class="['arrow', activeArrow ? 'down' : 'up']" />
+      <a :class="['arrow', expanded ? 'down' : 'up']" />
     </a>
 
-    <div class="content" ref="collapse">
+    <div
+      class="content"
+      :style="{ '--height-collapse': maxHeightCollapse }"
+      ref="collapse"
+    >
       <li
         v-for="{ title, to, disabled } in items"
         :class="{ disabled, active: route.path === to }"
@@ -22,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 type NavItem = {
@@ -37,10 +43,9 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const activeArrow = ref<Boolean>(true)
+const expanded = ref<Boolean>(true)
 const collapse = ref<HTMLElement>()
-const border = ref<HTMLElement>()
-const maxHeightCollapse = ref<number>(0)
+const maxHeightCollapse = ref<string>('28px')
 const route = useRoute()
 
 const onRoute = computed(() => {
@@ -51,45 +56,18 @@ watch(
   () => onRoute.value,
   (active) => {
     if (!active) {
-      activeArrow.value = true
-      border.value?.setAttribute('style', `max-height:26px; opacity:0;`)
-      collapse.value?.removeAttribute('style')
+      expanded.value = true
     }
   }
 )
 
-onMounted(() => {
-  maxHeightCollapse.value = collapse.value?.scrollHeight!
-  border.value?.setAttribute(
-    'style',
-    `max-height:${maxHeightCollapse.value + 26}px;`
-  )
-})
-
 function onCollapsible() {
-  activeArrow.value = !activeArrow.value
+  expanded.value = !expanded.value
 
-  border.value?.setAttribute(
-    'style',
-    `max-height:${maxHeightCollapse.value + 26}px;`
-  )
+  maxHeightCollapse.value = `${collapse.value?.scrollHeight! + 28}px`
 
-  if (!onRoute.value && !activeArrow.value) {
-    collapse.value?.setAttribute(
-      'style',
-      `max-height:${maxHeightCollapse.value + 26}px;`
-    )
-  } else if (!onRoute.value && activeArrow.value) {
-    collapse.value?.setAttribute('style', `max-height:0px;`)
-  } else if (onRoute.value && !activeArrow.value) {
-    collapse.value?.setAttribute(
-      'style',
-      `max-height:${maxHeightCollapse.value + 26}px;`
-    )
-  } else if (onRoute.value && activeArrow.value) {
-    border.value?.setAttribute('style', `max-height:26px;`)
-
-    collapse.value?.setAttribute('style', `max-height:0px;`)
+  if (expanded.value) {
+    maxHeightCollapse.value = '28px'
   }
 }
 </script>
@@ -102,14 +80,6 @@ function onCollapsible() {
   overflow: hidden;
   height: max-content;
   transition: all 0.3s ease-out;
-  .border {
-    position: absolute;
-    top: 11px;
-    height: 0;
-    width: 4px;
-    border-radius: 15px;
-    transition: all 0.3s ease-out;
-  }
   .title {
     padding: 1rem 6rem 1rem 2.2rem;
     cursor: pointer;
@@ -123,6 +93,7 @@ function onCollapsible() {
     align-items: center;
     justify-items: left;
     width: max-content;
+    transition: all 0.3s ease-out;
     .arrow {
       border: solid #fff;
       border-width: 0 2px 2px 0;
@@ -142,20 +113,20 @@ function onCollapsible() {
   }
   .content {
     padding: 0rem 4rem 0rem 4rem;
-    display: grid;
     max-height: 0;
-    gap: 0.4rem;
-    transition: max-height 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    display: grid;
+    gap: 0.5rem;
     &:last-child {
       &::after {
         content: '';
-        height: 8px;
+        height: 10px;
+        position: initial;
       }
     }
     li {
       width: max-content;
       color: #babdc5;
-      transition: all 0.3s ease-out;
       &::marker {
         font-size: 28px;
       }
@@ -196,28 +167,37 @@ function onCollapsible() {
       }
     }
   }
-  &.on-route {
+  &.active {
     background: #232832;
+    transition: all 0.3s ease-out;
     .border {
+      position: absolute;
+      height: var(--height-border);
+      top: 11px;
+      width: 4px;
+      border-radius: 15px;
       background: var(--primary);
-      height: 100%;
       transition: all 0.3s ease-out;
     }
     .title {
       color: var(--primary);
-      a {
+      .arrow {
         border: solid var(--primary);
         border-width: 0 2px 2px 0;
       }
     }
-    .content {
-      max-height: 100%;
-      transition: all 0.3s ease-out;
-    }
   }
-  &.active {
+  &.expanded {
     background: #232832;
     transition: all 0.3s ease-out;
+    .border {
+      background: var(--primary);
+      transition: all 0.3s ease-in;
+    }
+    .content {
+      max-height: var(--height-collapse);
+      transition: all 0.3s ease-in;
+    }
   }
   &:hover {
     background: #232832;

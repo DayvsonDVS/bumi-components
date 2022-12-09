@@ -1,7 +1,5 @@
 <template>
-  <div :class="['nav-item', { 'on-route': route.path === to }]">
-    <div ref="border" class="border"></div>
-
+  <div :class="['nav-item', { active: route.path === to }]">
     <RouterLink
       :class="['content', { active: route.path === to }]"
       :to="props.to!"
@@ -36,14 +34,6 @@ const route = useRoute()
     border-radius: 15px;
     transition: all 0.3s ease-out;
   }
-  .border {
-    position: absolute;
-    top: 11px;
-    height: 26px;
-    width: 4px;
-    border-radius: 15px;
-    transition: all 0.3s ease-out;
-  }
   .content {
     padding: 1rem 6rem 1rem 2.2rem;
     cursor: pointer;
@@ -56,17 +46,23 @@ const route = useRoute()
     gap: 0.9rem;
     justify-content: left;
   }
-  &.on-route {
-    .border {
+  &.active {
+    background: #232832;
+    border-radius: 15px;
+    a {
+      color: var(--primary);
+    }
+    ::before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 0;
+      width: 4px;
+      border-radius: 15px;
       background: var(--primary);
       height: 26px;
       transition: all 0.3s ease-out;
     }
-  }
-  .active {
-    background: #232832;
-    border-radius: 15px;
-    color: var(--primary);
   }
 }
 </style>
