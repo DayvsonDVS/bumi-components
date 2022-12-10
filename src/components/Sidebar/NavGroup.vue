@@ -9,7 +9,7 @@
     <a class="title" @click="onCollapsible">
       <slot />
 
-      <a :class="['arrow', expanded ? 'down' : 'up']" />
+      <span class="arrow" />
     </a>
 
     <div
@@ -99,16 +99,10 @@ function onCollapsible() {
       border-width: 0 2px 2px 0;
       padding: 3px;
       transition: all 0.3s ease-out;
-      &.up {
-        transform: rotate(-135deg);
-        -webkit-transform: rotate(-135deg);
-        position: relative;
-        bottom: -2px;
-      }
-      &.down {
-        transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
-      }
+      transform: rotate(-135deg);
+      -webkit-transform: rotate(-135deg);
+      position: relative;
+      bottom: -2px;
     }
   }
   .content {
@@ -193,6 +187,12 @@ function onCollapsible() {
     .border {
       background: var(--primary);
       transition: all 0.3s ease-in;
+    }
+    .title {
+      .arrow {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+      }
     }
     .content {
       max-height: var(--height-collapse);
