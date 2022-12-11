@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 type NavItem = {
@@ -60,6 +60,14 @@ watch(
     }
   }
 )
+onMounted(() => {
+  setTimeout(() => {
+    if (onRoute.value) {
+      expanded.value = true
+      maxHeightCollapse.value = `${collapse.value?.scrollHeight! + 28}px`
+    }
+  }, 55)
+})
 
 function onCollapsible() {
   expanded.value = !expanded.value
@@ -99,7 +107,6 @@ function onCollapsible() {
       border-width: 0 2px 2px 0;
       padding: 3px;
       transition: all 0.3s ease-out;
-
       transform: rotate(45deg);
       -webkit-transform: rotate(45deg);
     }

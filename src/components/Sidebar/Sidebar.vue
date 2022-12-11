@@ -43,7 +43,7 @@ function resize() {
   .wrap {
     right: -12px;
     top: 80px;
-    background: #424753;
+    background: #313640;
     height: 25px;
     width: 25px;
     position: absolute;
