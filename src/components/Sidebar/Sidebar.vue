@@ -1,6 +1,6 @@
 <template>
-  <div :class="['sidebar', { 'is-close': close && props.adjustable }]">
-    <div v-if="props.adjustable" class="wrap" @click="resize">
+  <div :class="['sidebar', { 'is-close': close && props.minimize }]">
+    <div v-if="props.minimize" class="wrap" @click="resize">
       <span class="arrow" />
     </div>
     <slot />
@@ -11,11 +11,11 @@
 import { ref } from 'vue'
 
 interface Props {
-  adjustable?: boolean
+  minimize?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  adjustable: false
+  minimize: false
 })
 
 const close = ref<boolean>(false)
@@ -41,21 +41,21 @@ function resize() {
   transform: translate3d(0, 0, 0);
   transition: transform 0.3s ease-out;
   .wrap {
-    right: -15px;
-    top: 60px;
+    right: -12px;
+    top: 80px;
     background: #424753;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     position: absolute;
     border-radius: 15px;
     cursor: pointer;
     .arrow {
       top: 9px;
-      right: 6px;
+      right: 7px;
       position: absolute;
       border: solid #fff;
       border-width: 0 2px 2px 0;
-      padding: 5px;
+      padding: 3px;
       transform: rotate(45deg);
       -webkit-transform: rotate(135deg);
     }
@@ -66,7 +66,7 @@ function resize() {
   transition: transform 0.3s ease-out;
   .wrap {
     .arrow {
-      right: 11px;
+      right: 9px;
       transform: rotate(45deg);
       -webkit-transform: rotate(-45deg);
     }

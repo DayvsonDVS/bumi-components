@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <Sidebar adjustable>
+    <Sidebar minimize>
       <h1>Header</h1>
       <NavItem to="/profile"> Profile </NavItem>
 
