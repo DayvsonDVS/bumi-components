@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
+    path: '/',
+    name: '',
+    component: () => import('@/dev/views/profile.vue')
+  },
+  {
     path: '/profile',
     name: 'profile',
     component: () => import('@/dev/views/profile.vue')

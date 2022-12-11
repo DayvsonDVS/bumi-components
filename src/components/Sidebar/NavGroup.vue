@@ -1,5 +1,5 @@
 <template>
-  <div :class="['nav-group', { active: onRoute, expanded: !expanded }]">
+  <div :class="['nav-group', { active: onRoute, expanded: expanded }]">
     <div
       class="border"
       ref="border"
@@ -43,7 +43,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const expanded = ref<Boolean>(true)
+const expanded = ref<Boolean>(false)
 const collapse = ref<HTMLElement>()
 const maxHeightCollapse = ref<string>('28px')
 const route = useRoute()
@@ -56,7 +56,7 @@ watch(
   () => onRoute.value,
   (active) => {
     if (!active) {
-      expanded.value = true
+      expanded.value = false
     }
   }
 )
@@ -66,7 +66,7 @@ function onCollapsible() {
 
   maxHeightCollapse.value = `${collapse.value?.scrollHeight! + 28}px`
 
-  if (expanded.value) {
+  if (!expanded.value) {
     maxHeightCollapse.value = '28px'
   }
 }
@@ -99,10 +99,9 @@ function onCollapsible() {
       border-width: 0 2px 2px 0;
       padding: 3px;
       transition: all 0.3s ease-out;
-      transform: rotate(-135deg);
-      -webkit-transform: rotate(-135deg);
-      position: relative;
-      bottom: -2px;
+
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
     }
   }
   .content {
@@ -190,8 +189,10 @@ function onCollapsible() {
     }
     .title {
       .arrow {
-        transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
+        transform: rotate(-135deg);
+        -webkit-transform: rotate(-135deg);
+        position: relative;
+        bottom: -2px;
       }
     }
     .content {
