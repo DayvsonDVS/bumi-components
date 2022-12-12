@@ -26,12 +26,11 @@ const route = useRoute()
 .nav-item {
   position: relative;
   overflow: hidden;
-  height: max-content;
+  height: 50px;
   border-radius: 15px;
   transition: all 0.3s ease-out;
   &:hover {
     background: #232832;
-    border-radius: 15px;
     transition: all 0.3s ease-out;
   }
   .content {
@@ -60,7 +59,7 @@ const route = useRoute()
       width: 4px;
       border-radius: 15px;
       background: var(--primary);
-      height: 26px;
+      height: calc(100% - 22px);
       transition: all 0.3s ease-out;
     }
   }

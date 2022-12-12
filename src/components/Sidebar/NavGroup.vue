@@ -1,22 +1,11 @@
 <template>
   <div :class="['nav-group', { active: onRoute, expanded: expanded }]">
-    <div
-      class="border"
-      ref="border"
-      :style="{ '--height-border': maxHeightCollapse }"
-    ></div>
-
     <a class="title" @click="onCollapsible">
       <slot />
-
       <span class="arrow" />
     </a>
 
-    <div
-      class="content"
-      :style="{ '--height-collapse': maxHeightCollapse }"
-      ref="collapse"
-    >
+    <div class="content">
       <li
         v-for="{ title, to, disabled } in items"
         :class="{ disabled, active: route.path === to }"
@@ -28,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 type NavItem = {
@@ -44,11 +33,12 @@ interface Props {
 const props = defineProps<Props>()
 
 const expanded = ref<Boolean>(false)
-const collapse = ref<HTMLElement>()
-const maxHeightCollapse = ref<string>('28px')
 const route = useRoute()
 
 const onRoute = computed(() => {
+  if (props.items?.some(({ to }) => to === route.path)) {
+    expanded.value = true
+  }
   return props.items?.some(({ to }) => to === route.path) as boolean
 })
 
@@ -60,23 +50,9 @@ watch(
     }
   }
 )
-onMounted(() => {
-  setTimeout(() => {
-    if (onRoute.value) {
-      expanded.value = true
-      maxHeightCollapse.value = `${collapse.value?.scrollHeight! + 28}px`
-    }
-  }, 55)
-})
 
 function onCollapsible() {
   expanded.value = !expanded.value
-
-  maxHeightCollapse.value = `${collapse.value?.scrollHeight! + 28}px`
-
-  if (!expanded.value) {
-    maxHeightCollapse.value = '28px'
-  }
 }
 </script>
 
@@ -86,7 +62,7 @@ function onCollapsible() {
   border-radius: 15px;
   color: #fff;
   overflow: hidden;
-  height: max-content;
+  height: 50px;
   transition: all 0.3s ease-out;
   .title {
     padding: 1rem 6rem 1rem 2.2rem;
@@ -112,9 +88,7 @@ function onCollapsible() {
     }
   }
   .content {
-    padding: 0rem 4rem 0rem 4rem;
-    max-height: 0;
-    transition: all 0.3s ease-out;
+    padding: 0rem 4rem;
     display: grid;
     gap: 0.5rem;
     &:last-child {
@@ -131,9 +105,7 @@ function onCollapsible() {
         font-size: 28px;
       }
       &.active {
-        &::marker {
-          color: var(--primary);
-        }
+        &::marker,
         a {
           color: var(--primary);
         }
@@ -170,9 +142,10 @@ function onCollapsible() {
   &.active {
     background: #232832;
     transition: all 0.3s ease-out;
-    .border {
+    &::before {
+      content: '';
       position: absolute;
-      height: var(--height-border);
+      height: calc(100% - 22px);
       top: 11px;
       width: 4px;
       border-radius: 15px;
@@ -190,10 +163,7 @@ function onCollapsible() {
   &.expanded {
     background: #232832;
     transition: all 0.3s ease-out;
-    .border {
-      background: var(--primary);
-      transition: all 0.3s ease-in;
-    }
+    height: 100%;
     .title {
       .arrow {
         transform: rotate(-135deg);
@@ -201,10 +171,6 @@ function onCollapsible() {
         position: relative;
         bottom: -2px;
       }
-    }
-    .content {
-      max-height: var(--height-collapse);
-      transition: all 0.3s ease-in;
     }
   }
   &:hover {
