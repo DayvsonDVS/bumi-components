@@ -26,5 +26,8 @@ import { Sidebar, NavItem, NavGroup } from '@/index'
 
 <style scoped lang="scss">
 .content {
+  display: grid;
+  grid-template-columns: min-content min-content;
+  align-content: center;
 }
 </style>

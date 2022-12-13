@@ -27,9 +27,7 @@ function resize() {
 
 <style scoped lang="scss">
 .sidebar {
-  position: absolute;
-  left: 0;
-  top: 0;
+  margin: -8px 0px 0px -8px;
   display: grid;
   grid-auto-rows: auto;
   gap: 1rem;
@@ -62,6 +60,7 @@ function resize() {
   }
 }
 .is-close {
+  position: absolute;
   transform: translate3d(-259px, 0, 0);
   transition: transform 0.3s ease-out;
   .wrap {
