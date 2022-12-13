@@ -1,8 +1,6 @@
 <template>
-  <div :class="['sidebar', { 'is-close': close && props.minimize }]">
-    <div v-if="props.minimize" class="wrap" @click="resize">
-      <span class="arrow" />
-    </div>
+  <div :class="['sidebar', { 'is-close': onClose && props.minimize }]">
+    <div v-if="props.minimize" class="wrap" @click="resize"></div>
     <slot />
   </div>
 </template>
@@ -18,10 +16,10 @@ const props = withDefaults(defineProps<Props>(), {
   minimize: false
 })
 
-const close = ref<boolean>(false)
+const onClose = ref<boolean>(false)
 
 function resize() {
-  close.value = !close.value
+  onClose.value = !onClose.value
 }
 </script>
 
@@ -47,7 +45,8 @@ function resize() {
     position: absolute;
     border-radius: 15px;
     cursor: pointer;
-    .arrow {
+    &::before {
+      content: '';
       top: 9px;
       right: 7px;
       position: absolute;
@@ -64,7 +63,7 @@ function resize() {
   transform: translate3d(-259px, 0, 0);
   transition: transform 0.3s ease-out;
   .wrap {
-    .arrow {
+    &::before {
       right: 9px;
       transform: rotate(45deg);
       -webkit-transform: rotate(-45deg);

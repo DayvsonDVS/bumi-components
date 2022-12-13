@@ -1,9 +1,6 @@
 <template>
   <div :class="['nav-item', { active: route.path === to }]">
-    <RouterLink
-      :class="['content', { active: route.path === to }]"
-      :to="props.to!"
-    >
+    <RouterLink class="content" :to="to!">
       <slot />
     </RouterLink>
   </div>
@@ -14,10 +11,9 @@ import { RouterLink, useRoute } from 'vue-router'
 
 interface Props {
   to?: string
-  active?: boolean
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const route = useRoute()
 </script>

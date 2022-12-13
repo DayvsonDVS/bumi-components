@@ -2,7 +2,6 @@
   <div :class="['nav-group', { active: onRoute, expanded: expanded }]">
     <a class="title" @click="onCollapsible">
       <slot />
-      <span class="arrow" />
     </a>
 
     <div class="content">
@@ -78,7 +77,8 @@ function onCollapsible() {
     justify-items: left;
     width: max-content;
     transition: all 0.3s ease-out;
-    .arrow {
+    &::after {
+      content: '';
       border: solid #fff;
       border-width: 0 2px 2px 0;
       padding: 3px;
@@ -154,7 +154,7 @@ function onCollapsible() {
     }
     .title {
       color: var(--primary);
-      .arrow {
+      &::after {
         border: solid var(--primary);
         border-width: 0 2px 2px 0;
       }
@@ -165,7 +165,7 @@ function onCollapsible() {
     transition: all 0.3s ease-out;
     height: 100%;
     .title {
-      .arrow {
+      &::after {
         transform: rotate(-135deg);
         -webkit-transform: rotate(-135deg);
         position: relative;
