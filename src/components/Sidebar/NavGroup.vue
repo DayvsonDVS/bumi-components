@@ -7,7 +7,7 @@
     <div class="content">
       <li
         v-for="{ title, to, disabled } in items"
-        :class="{ disabled, active: route.path === to }"
+        :class="{ disabled, active: route?.path === to }"
       >
         <RouterLink :to="to"> {{ title }} </RouterLink>
       </li>
@@ -35,10 +35,10 @@ const expanded = ref<Boolean>(false)
 const route = useRoute()
 
 const onRoute = computed(() => {
-  if (props.items?.some(({ to }) => to === route.path)) {
+  if (props.items?.some(({ to }) => to === route?.path)) {
     expanded.value = true
   }
-  return props.items?.some(({ to }) => to === route.path) as boolean
+  return props.items?.some(({ to }) => to === route?.path) as boolean
 })
 
 watch(
@@ -147,6 +147,7 @@ function onCollapsible() {
       position: absolute;
       height: calc(100% - 22px);
       top: 11px;
+      left: 0;
       width: 4px;
       border-radius: 15px;
       background: var(--primary);

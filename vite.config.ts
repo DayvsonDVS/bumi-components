@@ -24,7 +24,7 @@ export default defineConfig({
       fileName: 'bumi-components'
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'vue-router'],
       output: {
         globals: {
           vue: 'Vue'
