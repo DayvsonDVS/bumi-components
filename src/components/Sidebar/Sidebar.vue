@@ -60,7 +60,7 @@ function resize() {
 }
 .is-close {
   position: absolute;
-  transform: translate3d(-259px, 0, 0);
+  transform: translate3d(-95%, 0, 0);
   transition: transform 0.3s ease-out;
   .wrap {
     &::before {
