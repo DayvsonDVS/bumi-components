@@ -42,7 +42,6 @@ onMounted(() => {
             position: index + 1
           })
         })
-
         props.drag(positions)
       }
     }
@@ -55,18 +54,19 @@ onMounted(() => {
   width: 100%;
   background: #2b2f39;
   color: #fff;
-  padding: 2.5rem;
+  padding: 1.5rem;
   border-radius: 12px;
   border-spacing: 0;
-
+  @include for-size('phone') {
+    padding: 1rem;
+  }
   thead {
     text-align: left;
-
     tr {
       th {
         font-weight: var(--font-regular);
         background: #1c2029;
-        padding: 1rem 1.7rem;
+        padding: 0.75rem;
         &:first-child {
           border-bottom-left-radius: 12px;
           border-top-left-radius: 12px;
@@ -88,7 +88,7 @@ onMounted(() => {
     :deep(tr) {
       th {
         font-weight: var(--font-regular);
-        padding: 1rem 1.7rem;
+        padding: 0.75rem;
         &:first-child {
           border-bottom-left-radius: 12px;
           border-top-left-radius: 12px;

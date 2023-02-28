@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <!-- <div class="content">
     <Sidebar minimize>
       <h1>Header</h1>
       <NavItem to="/profile"> Profile </NavItem>
@@ -17,11 +17,26 @@
 
       <h1>Footer</h1>
     </Sidebar>
+  </div> -->
+
+  <div class="content">
+    <Table :columns="['ID', 'Name', 'E-mail']" striped>
+      <Row uid="1">
+        <Column>1 </Column>
+        <Column>Dayvson </Column>
+        <Column>Dayvson_dvs@hotmail.com </Column>
+      </Row>
+      <Row uid="2">
+        <Column>2 </Column>
+        <Column>Fulano </Column>
+        <Column>Fulano@hotmail.com </Column>
+      </Row>
+    </Table>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Sidebar, NavItem, NavGroup } from '@/index'
+import { Table, Column, Row } from '@/index'
 </script>
 
 <style scoped lang="scss">
@@ -29,5 +44,6 @@ import { Sidebar, NavItem, NavGroup } from '@/index'
   display: grid;
   grid-template-columns: min-content min-content;
   align-content: center;
+  justify-content: center;
 }
 </style>

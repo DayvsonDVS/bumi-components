@@ -34,7 +34,7 @@ $colors: primary, success, danger, warning;
 .button {
   width: max-content;
   height: 100%;
-  padding: 14px 22px;
+  padding: 9px 12px;
   color: #fff;
   border-radius: 12px;
   font-weight: var(--font-regular);
