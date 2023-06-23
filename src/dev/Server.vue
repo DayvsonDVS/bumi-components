@@ -20,16 +20,26 @@
   </div> -->
 
   <div class="content">
-    <Table :columns="['ID', 'Name', 'E-mail']" striped>
-      <Row uid="1">
-        <Column>1 </Column>
-        <Column>Dayvson </Column>
-        <Column>Dayvson_dvs@hotmail.com </Column>
+    <Table filter :columns="['ID', 'Status', 'Name', 'E-mail']" striped>
+      <Row uid="3">
+        <Column>3 </Column>
+        <Column>inativo </Column>
+        <Column>Maria </Column>
+        <Column>Maria@hotmail.com </Column>
       </Row>
+
       <Row uid="2">
         <Column>2 </Column>
-        <Column>Fulano </Column>
-        <Column>Fulano@hotmail.com </Column>
+        <Column>ativo </Column>
+        <Column>Fulano</Column>
+        <Column>Fulano1@hotmail.com </Column>
+      </Row>
+
+      <Row uid="1">
+        <Column>1 </Column>
+        <Column>ativo </Column>
+        <Column>Dayvson</Column>
+        <Column>Dayvson_dvs@hotmail.com </Column>
       </Row>
     </Table>
   </div>
