@@ -36,22 +36,16 @@ const tbody = ref<HTMLElement>()
 const hasFilter = ref<HTMLElement>()
 
 onMounted(() => {
-  const listColumn = [...hasFilter.value?.children!]
-  const listRow = [...tbody.value?.children!]
+  setTimeout(() => {
+    const listColumn = [...hasFilter.value?.children!]
+    const listRow = [...tbody.value?.children!]
 
-  listColumn.map((el, index) => {
-    if (listColumn) {
-      el.addEventListener('click', () => {
-        listRow.map(() => {
-          if (props.filter) {
-            sortTable(index)
-            clearFilter(listColumn)
-            isFiltered(el)
-          }
-        })
-      })
-    }
-  })
+    listColumn.map((el, index) => {
+      if (listColumn) {
+        handleClick(el, index, listColumn, listRow)
+      }
+    })
+  }, 55)
 
   if (!props.drag) return
 
@@ -71,6 +65,23 @@ onMounted(() => {
     }
   })
 })
+
+function handleClick(
+  el: Element,
+  index: number,
+  listColumn: Element[],
+  listRow: Element[]
+) {
+  el.addEventListener('click', () => {
+    listRow.map(() => {
+      if (props.filter) {
+        sortTable(index)
+        clearFilter(listColumn)
+        isFiltered(el)
+      }
+    })
+  })
+}
 
 function isFiltered(element: Element) {
   element.classList.add('filtered')
