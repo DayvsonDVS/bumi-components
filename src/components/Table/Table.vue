@@ -45,7 +45,7 @@ onMounted(() => {
         handleClick(el, index, listColumn, listRow)
       }
     })
-  }, 55)
+  }, 650)
 
   if (!props.drag) return
 
